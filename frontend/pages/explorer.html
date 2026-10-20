@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InsightX | Data Explorer</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        .explorer-page {
+            padding: 30px;
+            color: #f1f5f9;
+        }
+
+        .explorer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .explorer-header h1 {
+            font-size: 29px;
+            margin: 10px 0;
+        }
+
+        .explorer-header p {
+            color: #94a3b8;
+        }
+
+        .explorer-btn {
+            padding: 12px 17px;
+            background: #7557f6;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .explorer-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .explorer-card,
+        .explorer-panel {
+            background: #141d30;
+            border: 1px solid #26334a;
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .explorer-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .explorer-card h2 {
+            font-size: 27px;
+        }
+
+        .explorer-toolbar {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .explorer-input,
+        .explorer-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #34415a;
+            border-radius: 9px;
+            background: #0e1728;
+            color: #f1f5f9;
+            outline: none;
+        }
+
+        .explorer-input:focus,
+        .explorer-select:focus {
+            border-color: #8b75ff;
+        }
+
+        .explorer-table-wrap {
+            overflow-x: auto;
+        }
+
+        .explorer-table {
+            width: 100%;
+            min-width: 850px;
+            border-collapse: collapse;
+        }
+
+        .explorer-table th,
+        .explorer-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #26334a;
+            text-align: left;
+        }
+
+        .explorer-table th {
+            color: #94a3b8;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .explorer-table th:hover {
+            color: #c4b5fd;
+        }
+
+        .explorer-table td {
+            font-size: 14px;
+        }
+
+        .explorer-table tbody tr:hover {
+            background: #1b2740;
+        }
+
+        .explorer-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            background: #10352f;
+            color: #34d399;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .explorer-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .explorer-note {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 800px) {
+            .explorer-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .explorer-toolbar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .explorer-page {
+                padding: 17px;
+            }
+
+            .explorer-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="explorer-page">
+
+    <header class="explorer-header">
+        <div>
+            <p>WORKSPACE / DATA EXPLORER</p>
+
+            <h1>
+                <i class="fa-solid fa-database"
+                   style="color:#a99aff"></i>
+                Data Explorer
+            </h1>
+
+            <p>Search, filter, sort and export sample sales records.</p>
+        </div>
+
+        <button class="explorer-btn" id="exportData">
+            <i class="fa-solid fa-download"></i> Export CSV
+        </button>
+    </header>
+
+    <section class="explorer-stats">
+
+        <article class="explorer-card">
+            <p><i class="fa-solid fa-table"></i> Total Records</p>
+            <h2 id="totalRecords">12</h2>
+        </article>
+
+        <article class="explorer-card">
+            <p><i class="fa-solid fa-indian-rupee-sign"></i> Filtered Revenue</p>
+            <h2 id="filteredRevenue">₹0</h2>
+        </article>
+
+        <article class="explorer-card">
+            <p><i class="fa-solid fa-filter"></i> Matching Records</p>
+            <h2 id="matchingRecords">12</h2>
+        </article>
+
+    </section>
+
+    <section class="explorer-panel">
+
+        <div class="explorer-toolbar">
+
+            <input
+                type="search"
+                id="searchInput"
+                class="explorer-input"
+                placeholder="Search product, region or category..."
+                aria-label="Search sales records">
+
+            <select id="regionFilter"
+                    class="explorer-select"
+                    aria-label="Filter by region">
+                <option value="All">All Regions</option>
+                <option value="North">North</option>
+                <option value="South">South</option>
+                <option value="East">East</option>
+                <option value="West">West</option>
+            </select>
+
+            <select id="categoryFilter"
+                    class="explorer-select"
+                    aria-label="Filter by category">
+                <option value="All">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Home">Home</option>
+                <option value="Accessories">Accessories</option>
+            </select>
+
+        </div>
+
+        <div class="explorer-table-wrap">
+            <table class="explorer-table">
+
+                <thead>
+                    <tr>
+                        <th data-sort="id">Order ID ↕</th>
+                        <th data-sort="product">Product ↕</th>
+                        <th data-sort="category">Category ↕</th>
+                        <th data-sort="region">Region ↕</th>
+                        <th data-sort="sales">Sales (₹) ↕</th>
+                        <th data-sort="profit">Profit (₹) ↕</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="salesTableBody"></tbody>
+
+            </table>
+        </div>
+
+        <div class="explorer-footer">
+            <span id="recordCount">Showing 12 records</span>
+            <span>Click column headings to sort ↕</span>
+        </div>
+
+        <p class="explorer-note">
+            <i class="fa-solid fa-circle-info"></i>
+            This page currently uses illustrative demo records, not your live database.
+        </p>
+
+    </section>
+
+</main>
+
+<script>
+    const salesData = [
+        {id:1001, product:"Wireless Mouse", category:"Electronics", region:"North", sales:12000, profit:2400},
+        {id:1002, product:"Headphones", category:"Electronics", region:"South", sales:9500, profit:1900},
+        {id:1003, product:"Casual T-Shirt", category:"Clothing", region:"East", sales:6500, profit:1300},
+        {id:1004, product:"Coffee Mug", category:"Home", region:"West", sales:4200, profit:840},
+        {id:1005, product:"Travel Bag", category:"Accessories", region:"North", sales:11000, profit:2200},
+        {id:1006, product:"Keyboard", category:"Electronics", region:"West", sales:7800, profit:1560},
+        {id:1007, product:"Running Shoes", category:"Clothing", region:"South", sales:8900, profit:1780},
+        {id:1008, product:"Desk Lamp", category:"Home", region:"East", sales:5100, profit:1020},
+        {id:1009, product:"Smart Watch", category:"Electronics", region:"North", sales:15000, profit:3000},
+        {id:1010, product:"Backpack", category:"Accessories", region:"South", sales:7200, profit:1440},
+        {id:1011, product:"Cotton Shirt", category:"Clothing", region:"West", sales:5800, profit:1160},
+        {id:1012, product:"Storage Box", category:"Home", region:"East", sales:3600, profit:720}
+    ];
+
+    let sortKey = "id";
+    let sortDirection = 1;
+
+    const searchInput = document.getElementById("searchInput");
+    const regionFilter = document.getElementById("regionFilter");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const tableBody = document.getElementById("salesTableBody");
+
+    function getFilteredData() {
+        const query = searchInput.value.trim().toLowerCase();
+        const region = regionFilter.value;
+        const category = categoryFilter.value;
+
+        return salesData
+            .filter(row => {
+                const matchesSearch =
+                    String(row.id).includes(query) ||
+                    row.product.toLowerCase().includes(query) ||
+                    row.category.toLowerCase().includes(query) ||
+                    row.region.toLowerCase().includes(query);
+
+                const matchesRegion =
+                    region === "All" || row.region === region;
+
+                const matchesCategory =
+                    category === "All" || row.category === category;
+
+                return matchesSearch && matchesRegion && matchesCategory;
+            })
+            .sort((a, b) => {
+                const x = a[sortKey];
+                const y = b[sortKey];
+
+                if (typeof x === "string") {
+                    return x.localeCompare(y) * sortDirection;
+                }
+
+                return (x - y) * sortDirection;
+            });
+    }
+
+    function renderTable() {
+        const rows = getFilteredData();
+
+        tableBody.innerHTML = "";
+
+        rows.forEach(row => {
+            const tr = document.createElement("tr");
+
+            const values = [
+                row.id,
+                row.product,
+                row.category,
+                row.region,
+                "₹" + row.sales.toLocaleString("en-IN"),
+                "₹" + row.profit.toLocaleString("en-IN")
+            ];
+
+            values.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value;
+                tr.appendChild(td);
+            });
+
+            const status = document.createElement("td");
+            status.innerHTML = '<span class="explorer-badge">Completed</span>';
+            tr.appendChild(status);
+
+            tableBody.appendChild(tr);
+        });
+
+        const revenue = rows.reduce((sum, row) => sum + row.sales, 0);
+
+        document.getElementById("totalRecords").textContent =
+            salesData.length;
+
+        document.getElementById("matchingRecords").textContent =
+            rows.length;
+
+        document.getElementById("filteredRevenue").textContent =
+            "₹" + revenue.toLocaleString("en-IN");
+
+        document.getElementById("recordCount").textContent =
+            `Showing ${rows.length} of ${salesData.length} records`;
+    }
+
+    searchInput.addEventListener("input", renderTable);
+    regionFilter.addEventListener("change", renderTable);
+    categoryFilter.addEventListener("change", renderTable);
+
+    document.querySelectorAll("[data-sort]").forEach(heading => {
+        heading.addEventListener("click", () => {
+            const newKey = heading.dataset.sort;
+
+            if (sortKey === newKey) {
+                sortDirection *= -1;
+            } else {
+                sortKey = newKey;
+                sortDirection = 1;
+            }
+
+            renderTable();
+        });
+    });
+
+    document.getElementById("exportData").addEventListener("click", () => {
+        const rows = getFilteredData();
+
+        const csvRows = [
+            ["Order ID", "Product", "Category", "Region", "Sales", "Profit"],
+            ...rows.map(row => [
+                row.id,
+                row.product,
+                row.category,
+                row.region,
+                row.sales,
+                row.profit
+            ])
+        ];
+
+        const csv = csvRows
+            .map(row => row.map(value =>
+                '"' + String(value).replace(/"/g, '""') + '"'
+            ).join(","))
+            .join("\r\n");
+
+        const blob = new Blob(["\uFEFF" + csv], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "InsightX_Data_Explorer.csv";
+        link.click();
+
+        URL.revokeObjectURL(url);
+    });
+
+    renderTable();
+</script>
+
+</body>
+</html>

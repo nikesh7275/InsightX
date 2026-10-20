@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightX | Regional Analytics</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .region-page {
+            padding: 30px;
+            color: #f1f5f9;
+        }
+
+        .region-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .region-header h1 {
+            font-size: 29px;
+            margin: 10px 0;
+        }
+
+        .region-header p {
+            color: #94a3b8;
+        }
+
+        .region-btn {
+            background: #7557f6;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+
+        .region-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .region-card,
+        .region-panel {
+            background: #141d30;
+            border: 1px solid #26334a;
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .region-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #29234c;
+            color: #a99aff;
+            margin-bottom: 17px;
+            font-size: 19px;
+        }
+
+        .region-label {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .region-card h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .region-growth {
+            color: #34d399;
+            font-size: 13px;
+        }
+
+        .region-charts {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .region-panel h3 {
+            font-size: 18px;
+            margin-bottom: 22px;
+        }
+
+        .region-chart-area {
+            position: relative;
+            height: 300px;
+        }
+
+        .region-table-wrap {
+            overflow-x: auto;
+        }
+
+        .region-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        .region-table th,
+        .region-table td {
+            padding: 16px 12px;
+            text-align: left;
+            border-bottom: 1px solid #26334a;
+        }
+
+        .region-table th {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .region-table td {
+            font-size: 14px;
+        }
+
+        .region-badge {
+            display: inline-block;
+            background: #10352f;
+            color: #34d399;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .region-note {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        @media (max-width: 1000px) {
+            .region-kpis {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .region-charts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .region-page {
+                padding: 17px;
+            }
+
+            .region-kpis {
+                grid-template-columns: 1fr;
+            }
+
+            .region-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="region-page">
+
+    <header class="region-header">
+        <div>
+            <p>WORKSPACE / REGIONAL ANALYTICS</p>
+
+            <h1>
+                <i class="fa-solid fa-earth-asia"
+                   style="color:#a99aff"></i>
+                Regional Analytics
+            </h1>
+
+            <p>Compare revenue, profit and sales performance across regions.</p>
+        </div>
+
+        <button class="region-btn" id="exportRegions">
+            <i class="fa-solid fa-download"></i> Export Regions
+        </button>
+    </header>
+
+    <section class="region-kpis">
+
+        <article class="region-card">
+            <div class="region-icon">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <div class="region-label">Total Regions</div>
+            <h2>4</h2>
+            <div class="region-growth">All regions included</div>
+        </article>
+
+        <article class="region-card">
+            <div class="region-icon">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+            <div class="region-label">Total Revenue</div>
+            <h2>₹7.80L</h2>
+            <div class="region-growth">Illustrative value</div>
+        </article>
+
+        <article class="region-card">
+            <div class="region-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="region-label">Top Region</div>
+            <h2>North</h2>
+            <div class="region-growth">Demo ranking</div>
+        </article>
+
+        <article class="region-card">
+            <div class="region-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="region-label">Average Revenue</div>
+            <h2>₹1.95L</h2>
+            <div class="region-growth">Revenue per region</div>
+        </article>
+
+    </section>
+
+    <section class="region-charts">
+
+        <article class="region-panel">
+            <h3>
+                <i class="fa-solid fa-chart-column"
+                   style="color:#a99aff"></i>
+                Revenue by Region
+            </h3>
+
+            <div class="region-chart-area">
+                <canvas id="regionRevenueChart"></canvas>
+            </div>
+        </article>
+
+        <article class="region-panel">
+            <h3>
+                <i class="fa-solid fa-chart-pie"
+                   style="color:#a99aff"></i>
+                Regional Sales Share
+            </h3>
+
+            <div class="region-chart-area">
+                <canvas id="regionShareChart"></canvas>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="region-panel">
+
+        <h3>
+            <i class="fa-solid fa-ranking-star"
+               style="color:#f5b942"></i>
+            Regional Performance Report
+        </h3>
+
+        <div class="region-table-wrap">
+            <table class="region-table">
+
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                        <th>Orders</th>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>North</td>
+                        <td>₹2,40,000</td>
+                        <td>₹48,000</td>
+                        <td>380</td>
+                        <td><span class="region-badge">Excellent</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>South</td>
+                        <td>₹2,10,000</td>
+                        <td>₹42,000</td>
+                        <td>325</td>
+                        <td><span class="region-badge">Strong</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>East</td>
+                        <td>₹1,50,000</td>
+                        <td>₹30,000</td>
+                        <td>240</td>
+                        <td><span class="region-badge">Good</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>West</td>
+                        <td>₹1,80,000</td>
+                        <td>₹36,000</td>
+                        <td>255</td>
+                        <td><span class="region-badge">Strong</span></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <p class="region-note">
+            <i class="fa-solid fa-circle-info"></i>
+            Sample figures for portfolio demonstration only.
+        </p>
+
+    </section>
+
+</main>
+
+<script>
+    const regionText = "#94a3b8";
+    const regionGrid = "#26334a";
+
+    new Chart(document.getElementById("regionRevenueChart"), {
+        type: "bar",
+
+        data: {
+            labels: ["North", "South", "East", "West"],
+
+            datasets: [{
+                label: "Revenue (₹)",
+                data: [240000, 210000, 150000, 180000],
+                backgroundColor: [
+                    "#8b75ff",
+                    "#36cfc9",
+                    "#f5b942",
+                    "#4f8cff"
+                ],
+                borderRadius: 8
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    labels: { color: regionText }
+                }
+            },
+
+            scales: {
+                x: {
+                    ticks: { color: regionText },
+                    grid: { display: false }
+                },
+
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: regionText },
+                    grid: { color: regionGrid }
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById("regionShareChart"), {
+        type: "doughnut",
+
+        data: {
+            labels: ["North", "South", "East", "West"],
+
+            datasets: [{
+                data: [240000, 210000, 150000, 180000],
+                backgroundColor: [
+                    "#8b75ff",
+                    "#36cfc9",
+                    "#f5b942",
+                    "#4f8cff"
+                ],
+                borderWidth: 0
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        color: regionText,
+                        padding: 18
+                    }
+                }
+            }
+        }
+    });
+
+    document.getElementById("exportRegions").addEventListener("click", () => {
+
+        const csv = [
+            "Region,Revenue,Profit,Orders",
+            "North,240000,48000,380",
+            "South,210000,42000,325",
+            "East,150000,30000,240",
+            "West,180000,36000,255"
+        ].join("\n");
+
+        const blob = new Blob([csv], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "InsightX_Regional_Analytics.csv";
+        link.click();
+
+        URL.revokeObjectURL(url);
+    });
+</script>
+
+</body>
+</html>

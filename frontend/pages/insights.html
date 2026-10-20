@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightX | AI Insights</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .insights-page {
+            padding: 30px;
+            color: #f1f5f9;
+        }
+
+        .insights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+
+        .insights-header h1 {
+            font-size: 29px;
+            margin: 10px 0;
+        }
+
+        .insights-header p {
+            color: #94a3b8;
+        }
+
+        .insights-btn {
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: #7557f6;
+            color: white;
+            cursor: pointer;
+        }
+
+        .insights-banner {
+            padding: 27px;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            border: 1px solid #453b78;
+            background: linear-gradient(120deg, #211c43, #15263c);
+        }
+
+        .insights-banner h2 {
+            font-size: 22px;
+            margin: 12px 0;
+        }
+
+        .insights-banner p {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .insights-kpis {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .insights-card,
+        .insights-panel {
+            background: #141d30;
+            border: 1px solid #26334a;
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .insights-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #29234c;
+            color: #a99aff;
+            margin-bottom: 17px;
+            font-size: 19px;
+        }
+
+        .insights-label {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .insights-card h2 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .insights-positive {
+            color: #34d399;
+            font-size: 13px;
+        }
+
+        .insights-middle {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .insights-panel h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .insights-chart {
+            height: 280px;
+            position: relative;
+        }
+
+        .recommendation {
+            display: flex;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid #26334a;
+        }
+
+        .recommendation:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-icon {
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #29234c;
+            color: #a99aff;
+        }
+
+        .recommendation h4 {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .recommendation p {
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .priority {
+            display: inline-block;
+            margin-top: 9px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            background: #10352f;
+            color: #34d399;
+        }
+
+        .insights-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .alert-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #26334a;
+        }
+
+        .alert-row:last-child {
+            border-bottom: none;
+        }
+
+        .alert-row p {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .alert-tag {
+            padding: 6px 9px;
+            border-radius: 7px;
+            font-size: 11px;
+            white-space: nowrap;
+            background: #392b1b;
+            color: #fbbf24;
+        }
+
+        .insights-note {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 950px) {
+            .insights-kpis {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-middle,
+            .insights-bottom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .insights-page {
+                padding: 17px;
+            }
+
+            .insights-header h1 {
+                font-size: 24px;
+            }
+
+            .insights-banner {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="insights-page">
+
+    <header class="insights-header">
+        <div>
+            <p>WORKSPACE / AI INSIGHTS</p>
+
+            <h1>
+                <i class="fa-solid fa-wand-magic-sparkles"
+                   style="color:#a99aff"></i>
+                AI Business Insights
+            </h1>
+
+            <p>Explore business patterns and actionable recommendations.</p>
+        </div>
+
+        <button class="insights-btn" id="refreshInsights">
+            <i class="fa-solid fa-rotate"></i> Refresh Insights
+        </button>
+    </header>
+
+    <section class="insights-banner">
+        <div style="color:#a99aff;font-size:13px;font-weight:600;">
+            <i class="fa-solid fa-sparkles"></i>
+            BUSINESS INTELLIGENCE OVERVIEW
+        </div>
+
+        <h2>Your business at a glance</h2>
+
+        <p>
+            Review sales performance, identify opportunities and explore
+            potential improvements using the sample analytics shown below.
+        </p>
+    </section>
+
+    <section class="insights-kpis">
+
+        <article class="insights-card">
+            <div class="insights-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div class="insights-label">Revenue Performance</div>
+            <h2>₹7.80L</h2>
+            <div class="insights-positive">Sample revenue metric</div>
+        </article>
+
+        <article class="insights-card">
+            <div class="insights-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="insights-label">Customer Base</div>
+            <h2>856</h2>
+            <div class="insights-positive">Sample customer count</div>
+        </article>
+
+        <article class="insights-card">
+            <div class="insights-icon">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
+
+            <div class="insights-label">Potential Opportunities</div>
+            <h2>3</h2>
+            <div class="insights-positive">Illustrative recommendations</div>
+        </article>
+
+    </section>
+
+    <section class="insights-middle">
+
+        <article class="insights-panel">
+            <h3>
+                <i class="fa-solid fa-chart-area"
+                   style="color:#a99aff"></i>
+                Business Performance
+            </h3>
+
+            <div class="insights-chart">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </article>
+
+        <article class="insights-panel">
+            <h3>
+                <i class="fa-solid fa-lightbulb"
+                   style="color:#f5b942"></i>
+                Recommendations
+            </h3>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+
+                <div>
+                    <h4>Review Top-Selling Products</h4>
+                    <p>
+                        Compare product revenue and profit to identify
+                        which products contribute the most value.
+                    </p>
+                    <span class="priority">HIGH PRIORITY</span>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <div>
+                    <h4>Improve Customer Retention</h4>
+                    <p>
+                        Analyze repeat purchases and consider loyalty
+                        offers for returning customers.
+                    </p>
+                    <span class="priority">MEDIUM PRIORITY</span>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-earth-asia"></i>
+                </div>
+
+                <div>
+                    <h4>Compare Regional Performance</h4>
+                    <p>
+                        Compare revenue, profit and order volume to
+                        discover regional growth opportunities.
+                    </p>
+                    <span class="priority">MEDIUM PRIORITY</span>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <section class="insights-bottom">
+
+        <article class="insights-panel">
+            <h3>
+                <i class="fa-solid fa-bell"
+                   style="color:#f5b942"></i>
+                Business Alerts
+            </h3>
+
+            <div class="alert-row">
+                <div>
+                    <strong>Product Performance</strong>
+                    <p>Review products with lower sales volume.</p>
+                </div>
+                <span class="alert-tag">Review</span>
+            </div>
+
+            <div class="alert-row">
+                <div>
+                    <strong>Customer Retention</strong>
+                    <p>Monitor repeat-purchase behavior.</p>
+                </div>
+                <span class="alert-tag">Monitor</span>
+            </div>
+
+            <div class="alert-row">
+                <div>
+                    <strong>Regional Comparison</strong>
+                    <p>Check differences in revenue and profit.</p>
+                </div>
+                <span class="alert-tag">Analyze</span>
+            </div>
+        </article>
+
+        <article class="insights-panel">
+            <h3>
+                <i class="fa-solid fa-list-check"
+                   style="color:#a99aff"></i>
+                Recommended Next Steps
+            </h3>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <h4>Validate Data Quality</h4>
+                    <p>Check missing values, duplicates and inconsistent records.</p>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div>
+                    <h4>Track KPIs Regularly</h4>
+                    <p>Compare current metrics against previous periods.</p>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <div class="recommendation-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                    <h4>Validate Business Hypotheses</h4>
+                    <p>Test recommendations against actual business data.</p>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <p class="insights-note">
+        <i class="fa-solid fa-circle-info"></i>
+        Demo interface only. These recommendations are predefined examples,
+        not outputs from a connected AI model or live business database.
+    </p>
+
+</main>
+
+<script>
+    const performanceCanvas = document.getElementById("performanceChart");
+
+    new Chart(performanceCanvas, {
+        type: "line",
+
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+
+            datasets: [
+                {
+                    label: "Revenue (₹ thousands)",
+                    data: [52, 58, 64, 70, 76, 82, 74, 88, 91, 85, 98, 110],
+                    borderColor: "#8b75ff",
+                    backgroundColor: "rgba(139,117,255,0.12)",
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: "Profit (₹ thousands)",
+                    data: [10, 12, 13, 14, 15, 16, 14, 18, 19, 17, 20, 22],
+                    borderColor: "#36cfc9",
+                    backgroundColor: "transparent",
+                    fill: false,
+                    tension: 0.4
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    labels: { color: "#cbd5e1" }
+                }
+            },
+
+            scales: {
+                x: {
+                    ticks: { color: "#94a3b8" },
+                    grid: { color: "#26334a" }
+                },
+
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: "#94a3b8" },
+                    grid: { color: "#26334a" }
+                }
+            }
+        }
+    });
+
+    document.getElementById("refreshInsights").addEventListener("click", function () {
+        this.innerHTML = '<i class="fa-solid fa-check"></i> Demo Insights Refreshed';
+
+        setTimeout(() => {
+            this.innerHTML = '<i class="fa-solid fa-rotate"></i> Refresh Insights';
+        }, 1800);
+    });
+</script>
+
+</body>
+</html>

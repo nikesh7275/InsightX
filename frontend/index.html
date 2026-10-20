@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InsightX | Business Analytics</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <span>Insight<span class="highlight">X</span></span>
+        </div>
+
+        <p class="menu-heading">MAIN MENU</p>
+
+        <nav class="navigation">
+            <a href="index.html" class="nav-link active">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="pages/sales.html" class="nav-link">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Sales Analytics</span>
+            </a>
+
+            <a href="pages/customers.html" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Customer Analytics</span>
+            </a>
+
+            <a href="pages/products.html" class="nav-link">
+                <i class="fa-solid fa-box"></i>
+                <span>Product Analytics</span>
+            </a>
+
+            <a href="pages/regions.html" class="nav-link">
+                <i class="fa-solid fa-globe"></i>
+                <span>Regional Analytics</span>
+            </a>
+
+            <a href="pages/explorer.html" class="nav-link">
+                <i class="fa-solid fa-table"></i>
+                <span>Data Explorer</span>
+            </a>
+
+            <p class="menu-heading secondary-heading">INTELLIGENCE</p>
+
+            <a href="pages/insights.html" class="nav-link">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>AI Insights</span>
+                <span class="new-badge">NEW</span>
+            </a>
+
+            <a href="pages/forecast.html" class="nav-link">
+                <i class="fa-solid fa-chart-area"></i>
+                <span>Sales Forecast</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="plan-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>InsightX Analytics</h4>
+                <p>Your business intelligence workspace.</p>
+                <div class="plan-progress">
+                    <span></span>
+                </div>
+                <small>Demo Workspace</small>
+            </div>
+
+            <div class="profile">
+                <div class="avatar">IX</div>
+                <div class="profile-info">
+                    <strong>Workspace Admin</strong>
+                    <small>Administrator</small>
+                </div>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                <span>Workspace</span>
+                <i class="fa-solid fa-chevron-right"></i>
+                <strong>Dashboard</strong>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search dashboard...">
+                    <span>⌘ K</span>
+                </div>
+
+                <button class="icon-button" aria-label="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="top-avatar">IX</div>
+            </div>
+
+        </header>
+
+        <!-- DASHBOARD HEADER -->
+        <section class="page-content">
+
+            <div class="page-heading">
+                <div>
+                    <div class="welcome-label">
+                        <span class="status-dot"></span>
+                        BUSINESS OVERVIEW
+                    </div>
+
+                    <h1>Dashboard Overview</h1>
+
+                    <p>
+                        Track your business performance and discover valuable insights.
+                    </p>
+                </div>
+
+                <div class="heading-actions">
+                    <button class="outline-button" id="refreshBtn">
+                        <i class="fa-solid fa-rotate"></i>
+                        Refresh
+                    </button>
+
+                    <button class="primary-button" id="exportBtn">
+                        <i class="fa-solid fa-download"></i>
+                        Export Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- FILTERS -->
+            <div class="filter-bar">
+
+                <div class="filter-label">
+                    <i class="fa-solid fa-sliders"></i>
+                    Filters
+                </div>
+
+                <select id="periodFilter" aria-label="Date range">
+                    <option value="all">All Time</option>
+                    <option value="6">Last 6 Months</option>
+                    <option value="3">Last 3 Months</option>
+                </select>
+
+                <select id="regionFilter" aria-label="Region">
+                    <option value="all">All Regions</option>
+                    <option value="North">North</option>
+                    <option value="South">South</option>
+                    <option value="East">East</option>
+                    <option value="West">West</option>
+                </select>
+
+                <select id="categoryFilter" aria-label="Category">
+                    <option value="all">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Home & Kitchen">Home & Kitchen</option>
+                    <option value="Beauty">Beauty</option>
+                </select>
+
+                <span class="demo-label">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Demo Data
+                </span>
+
+            </div>
+
+            <!-- KPI CARDS -->
+            <section class="kpi-grid">
+
+                <article class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon sales-icon">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <span class="trend positive">
+                            <i class="fa-solid fa-arrow-up"></i> 12.8%
+                        </span>
+                    </div>
+
+                    <p class="kpi-label">Total Sales</p>
+                    <h2 id="totalSales">₹7,20,971</h2>
+
+                    <div class="kpi-footer">
+                        <span>Revenue generated</span>
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon profit-icon">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <span class="trend positive">
+                            <i class="fa-solid fa-arrow-up"></i> 8.4%
+                        </span>
+                    </div>
+
+                    <p class="kpi-label">Total Profit</p>
+                    <h2 id="totalProfit">₹5,62,183</h2>
+
+                    <div class="kpi-footer">
+                        <span>Net profit recorded</span>
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </div>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon orders-icon">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <span class="trend positive">
+                            <i class="fa-solid fa-arrow-up"></i> 6.2%
+                        </span>
+                    </div>
+
+                    <p class="kpi-label">Total Orders</p>
+                    <h2 id="totalOrders">1,200</h2>
+
+                    <div class="kpi-footer">
+                        <span>Unique order IDs</span>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                </article>
+
+                <article class="kpi-card">
+                    <div class="kpi-top">
+                        <div class="kpi-icon customers-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <span class="trend positive">
+                            <i class="fa-solid fa-arrow-up"></i> 10.5%
+                        </span>
+                    </div>
+
+                    <p class="kpi-label">Total Customers</p>
+                    <h2 id="totalCustomers">856</h2>
+
+                    <div class="kpi-footer">
+                        <span>Unique customer IDs</span>
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- CHARTS -->
+            <section class="charts-grid">
+
+                <article class="panel sales-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Sales Performance</h3>
+                            <p>Monthly revenue overview</p>
+                        </div>
+
+                        <button class="more-button" aria-label="More options">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+
+                    <div class="chart-legend">
+                        <span class="legend-dot"></span>
+                        Total Sales
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+
+                </article>
+
+                <article class="panel category-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Sales by Category</h3>
+                            <p>Revenue distribution</p>
+                        </div>
+
+                        <button class="more-button" aria-label="More options">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+
+                    <div class="donut-container">
+                        <canvas id="categoryChart"></canvas>
+
+                        <div class="donut-center">
+                            <span>Total Revenue</span>
+                            <strong>₹7.2L</strong>
+                        </div>
+                    </div>
+
+                    <div class="category-legend">
+                        <div>
+                            <span class="legend-square purple"></span>
+                            Electronics
+                            <strong>35%</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-square blue"></span>
+                            Clothing
+                            <strong>28%</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-square cyan"></span>
+                            Home & Kitchen
+                            <strong>22%</strong>
+                        </div>
+
+                        <div>
+                            <span class="legend-square orange"></span>
+                            Beauty
+                            <strong>15%</strong>
+                        </div>
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- BOTTOM PANELS -->
+            <section class="bottom-grid">
+
+                <article class="panel products-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Top Performing Products</h3>
+                            <p>Best-selling products by revenue</p>
+                        </div>
+
+                        <a href="pages/products.html" class="view-all">
+                            View all <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>PRODUCT</th>
+                                    <th>CATEGORY</th>
+                                    <th>SALES</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-icon purple-bg">
+                                                <i class="fa-solid fa-laptop"></i>
+                                            </div>
+                                            <span>Premium Electronics</span>
+                                        </div>
+                                    </td>
+                                    <td>Electronics</td>
+                                    <td class="table-amount">₹1,24,500</td>
+                                    <td><span class="status-badge success">Top Seller</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-icon blue-bg">
+                                                <i class="fa-solid fa-shirt"></i>
+                                            </div>
+                                            <span>Classic Apparel</span>
+                                        </div>
+                                    </td>
+                                    <td>Clothing</td>
+                                    <td class="table-amount">₹98,250</td>
+                                    <td><span class="status-badge success">Trending</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-icon orange-bg">
+                                                <i class="fa-solid fa-mug-hot"></i>
+                                            </div>
+                                            <span>Home Essentials</span>
+                                        </div>
+                                    </td>
+                                    <td>Home & Kitchen</td>
+                                    <td class="table-amount">₹76,800</td>
+                                    <td><span class="status-badge neutral">Stable</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-icon green-bg">
+                                                <i class="fa-solid fa-pump-soap"></i>
+                                            </div>
+                                            <span>Beauty Collection</span>
+                                        </div>
+                                    </td>
+                                    <td>Beauty</td>
+                                    <td class="table-amount">₹64,200</td>
+                                    <td><span class="status-badge success">Growing</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </article>
+
+                <article class="panel insights-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Business Insights</h3>
+                            <p>Highlights from your workspace</p>
+                        </div>
+
+                        <span class="ai-tag">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            AI STYLE
+                        </span>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-icon insight-purple">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <div>
+                            <strong>Sales Performance</strong>
+                            <p>Sales trend is available for further analysis.</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-icon insight-green">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+
+                        <div>
+                            <strong>Profit Overview</strong>
+                            <p>Review profit by product and category.</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-item">
+                        <div class="insight-icon insight-orange">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+
+                        <div>
+                            <strong>Growth Opportunity</strong>
+                            <p>Compare regional performance to identify opportunities.</p>
+                        </div>
+                    </div>
+
+                    <a href="pages/insights.html" class="insights-link">
+                        Explore Insights
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </article>
+
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 InsightX Analytics Platform</span>
+                <span>Business Intelligence <span class="footer-dot">•</span> Demo Workspace</span>
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
